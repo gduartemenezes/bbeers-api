@@ -8,18 +8,21 @@ class UserController {
       email: Yup.string().required(),
       password: Yup.string().required().min(6),
     });
+
     try {
       if (!(await schema.isValid(req.body))) {
         return res.json({ error: 'Invalid data, try again' });
       }
 
-      const { email } = req.body;
-      const userExists = User.findOne({ where: { email } });
+      const userExists = await User.findOne({
+        where: { email: req.body.email },
+      });
 
-      if (userExists)
+      if (userExists) {
         return res.status(401).json({ message: 'E-mail already in use' });
+      }
 
-      const { id, name } = await User.create(req.body);
+      const { id, name, email } = await User.create(req.body);
 
       return res.json({
         id,
