@@ -19,9 +19,13 @@ class UserController {
       if (userExists)
         return res.status(401).json({ message: 'E-mail already in use' });
 
-      const user = await User.create(req.body);
+      const { id, name } = await User.create(req.body);
 
-      return res.json(user);
+      return res.json({
+        id,
+        name,
+        email,
+      });
     } catch (err) {
       return res.status(400).json({
         message: 'Request failed',
