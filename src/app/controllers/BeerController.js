@@ -22,6 +22,18 @@ class BeerController {
           message: 'Invalid data, try again',
         });
       }
+
+      if (!req.userId) {
+        return res.status(401).json({
+          error: 'You have no authorizarion to add this post',
+        });
+      }
+
+      const data = {
+        user_id: req.userId,
+        ...req.body,
+      };
+
       const {
         name,
         tag_linem,
@@ -31,7 +43,7 @@ class BeerController {
         value,
         pub,
         image_url,
-      } = await Beer.create(req.body);
+      } = await Beer.create(data);
 
       return res.json({
         name,
