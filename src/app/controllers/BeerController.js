@@ -61,6 +61,12 @@ class BeerController {
       });
     }
   }
+
+  async index(req, res) {
+    const allBeers = await Beer.findAll();
+
+    return res.json(allBeers);
+  }
 }
 
 export default new BeerController();

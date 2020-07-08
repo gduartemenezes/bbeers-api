@@ -9,6 +9,7 @@ const routes = Router();
 
 routes.post('/users', UserController.store);
 routes.post('/sessions', SessionController.store);
+routes.get('/beers', BeerController.index);
 
 routes.use(authMiddleware);
 
