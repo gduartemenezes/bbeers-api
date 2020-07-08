@@ -16,6 +16,7 @@ routes.use(authMiddleware);
 
 routes.put('/users', UserController.update);
 routes.post('/beers', BeerController.store);
-routes.get('/search', SearchController.searchUsers);
+routes.get('/searchU', SearchController.searchUsers);
+routes.get('/searchB', SearchController.searchBeers);
 
 export default routes;

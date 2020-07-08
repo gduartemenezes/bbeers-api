@@ -16,7 +16,29 @@ class SearchController {
           offset: (page - 1) * limit,
           order: 'updated_at',
         })
-      : await User.findAll({});
+      : await User.findAll();
+    return res.json(response);
+  }
+
+  async searchBeers(req, res) {
+    const { searchText } = req.body;
+    const { likes, postDate, tags, foodPairing, pub, page, limit } = req.query;
+
+    const response = searchText
+      ? Beer.findAll({
+          where: {
+            [Op.or]: [
+              { name: searchText },
+              { tags: searchText },
+              { food_pairing: searchText },
+              { abv: searchText },
+              { ibu: searchText },
+            ],
+          },
+          order: 'created_at',
+        })
+      : Beer.findAll();
+
     return res.json(response);
   }
 }
